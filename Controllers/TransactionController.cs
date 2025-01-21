@@ -30,9 +30,20 @@ namespace BosnetTest.Controllers
         }
 
         [HttpPut("transfer")]
-        public TransactionResponse Transfer([FromBody] TransactionTransferRequest requestList)
+        public TransactionTransferResponse Transfer([FromBody] TransactionTransferRequest requestList)
         {
             return _transactionService.Transfer(requestList);
+
+        }
+
+        [HttpGet("history")]
+        public TransactionHistoryResponse TransactionHistory([FromQuery] string? account, [FromQuery] string? dateFrom, [FromQuery] string? dateTo)
+        {
+            TransactionHistoryRequest request = new TransactionHistoryRequest();
+            request.Account = account;
+            request.DateFrom = dateFrom;
+            request.DateTo = dateTo;
+            return _transactionService.GetTransactionHistory(request);
 
         }
     }
