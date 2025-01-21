@@ -1,0 +1,6 @@
+@BosnetTest_HostAddress = http://localhost:3000
+
+GET {{BosnetTest_HostAddress}}/user/
+Accept: application/json
+
+###
