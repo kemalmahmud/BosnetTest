@@ -20,51 +20,19 @@ namespace BosnetTest.Controllers
         [HttpPut("setor")]
         public TransactionResponse Setor([FromBody] TransactionRequest request)
         {
-            return _transactionService.SetorAtauTarik(request, "Setor");
+            return _transactionService.SetorAtauTarik(request, "SETOR");
         }
 
         [HttpPut("tarik")]
         public TransactionResponse Tarik([FromBody] TransactionRequest request)
         {
-            return _transactionService.SetorAtauTarik(request, "Tarik");
+            return _transactionService.SetorAtauTarik(request, "TARIK");
         }
 
         [HttpPut("transfer")]
-        public TransactionResponse Transfer([FromBody] TransactionTransferRequest request)
+        public TransactionResponse Transfer([FromBody] TransactionTransferRequest requestList)
         {
-            TransactionResponse transactionResponse = new TransactionResponse();
-            try
-            {
-                //tranfer masuk
-                TransactionRequest transactionRequestTransfer1 = new TransactionRequest();
-                transactionRequestTransfer1.amount = request.amount;
-                transactionRequestTransfer1.account = request.accountTo;
-                transactionRequestTransfer1.currency = request.currency;
-                _transactionService.SetorAtauTarik(transactionRequestTransfer1, "Transfer Setor");
-
-                //tranfer keluar
-                TransactionRequest transactionRequestTransfer2 = new TransactionRequest();
-                transactionRequestTransfer2.amount = request.amount;
-                transactionRequestTransfer2.account = request.accountFrom;
-                transactionRequestTransfer2.currency = request.currency;
-                _transactionService.SetorAtauTarik(transactionRequestTransfer1, "Transfer Tarik");
-
-                transactionResponse.amount = request.amount;
-                transactionResponse.currency = request.currency;
-                transactionResponse.type = "Transfer";
-                transactionResponse.status = "Sukses";
-                transactionResponse.message = "Transfer berhasil dilakukan";
-                return transactionResponse;
-            }
-            catch (Exception ex)
-            {
-                transactionResponse.amount = request.amount;
-                transactionResponse.currency = request.currency;
-                transactionResponse.type = "Transfer";
-                transactionResponse.status = "Failed";
-                transactionResponse.message = "Transfer gagal dilakukan";
-                return transactionResponse;
-            }
+            return _transactionService.Transfer(requestList);
 
         }
     }

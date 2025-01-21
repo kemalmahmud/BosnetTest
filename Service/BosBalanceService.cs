@@ -38,7 +38,7 @@ namespace BosnetTest.Service
                     }
                     // ubah balance
                     decimal newBalance = 0;
-                    if(type.Equals("Setor")) newBalance = oldBalance + request.decAmount;
+                    if(type.Contains("SETOR")) newBalance = oldBalance + request.decAmount;
                     else newBalance = oldBalance - request.decAmount;
 
                     if (newBalance < 0) throw new Exception("saldo tidak mencukupi");

@@ -21,24 +21,13 @@ namespace BosnetTest.Service
             }
             return counter;
         }
-        public int GetAndUpdateTransactionIdLastNumber(Boolean reset, OleDbConnection connection, OleDbTransaction transaction)
+        public int GetAndUpdateTransactionIdLastNumber(int newLastNumber, OleDbConnection connection, OleDbTransaction transaction)
         {
-            int counter = 0;
-            if(!reset) counter = GetTransactionIdLastNumber(connection, transaction);
+            int counter = newLastNumber;
 
-            // Jika nilai iLastNumber ditemukan, tingkatkan nilainya
-            if (counter != -1)
+            using (var updateCommand = new OleDbCommand($"UPDATE [BOS_Counter] SET [iLastNumber] = {counter} WHERE [szCounterId] = '{_szCounterId}'", connection, transaction))
             {
-                counter++;
-
-                using (var updateCommand = new OleDbCommand($"UPDATE [BOS_Counter] SET [iLastNumber] = {counter} WHERE [szCounterId] = '{_szCounterId}'", connection, transaction))
-                {
-                    updateCommand.ExecuteNonQuery();
-                }
-            }
-            else
-            {
-                throw new InvalidOperationException("szCounterId not found in BOS_Counter.");
+                updateCommand.ExecuteNonQuery();
             }
 
             return counter;
