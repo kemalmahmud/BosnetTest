@@ -2,8 +2,8 @@
 {
     public class TransactionHistoryRequest
     {
-        public string Account {  get; set; }
-        public string DateFrom { get; set; }
-        public string DateTo { get; set; }
+        public string account {  get; set; }
+        public string dateFrom { get; set; }
+        public string dateTo { get; set; }
     }
 }

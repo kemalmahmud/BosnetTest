@@ -2,14 +2,14 @@
 {
     public class TransactionTransferRequest
     {
-        public string AccountFrom { get; set; }
-        public List<TransferContentRequest> Transfers { get; set; }
+        public string accountFrom { get; set; }
+        public List<TransferDataRequest> transfers { get; set; }
 
-        public class TransferContentRequest
+        public class TransferDataRequest
         {
-            public string AccountTo { get; set; } 
-            public decimal Amount { get; set; } 
-            public string Currency { get; set; } 
+            public string accountTo { get; set; } 
+            public decimal amount { get; set; } 
+            public string currency { get; set; } 
         }
     }
 

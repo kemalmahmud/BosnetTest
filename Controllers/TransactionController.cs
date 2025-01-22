@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace BosnetTest.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/transaction")]
     public class TransactionController : ControllerBase
     {
         private CounterService _counterSercice;
@@ -30,7 +30,7 @@ namespace BosnetTest.Controllers
         }
 
         [HttpPut("transfer")]
-        public TransactionTransferResponse Transfer([FromBody] TransactionTransferRequest requestList)
+        public TransactionResponse Transfer([FromBody] TransactionTransferRequest requestList)
         {
             return _transactionService.Transfer(requestList);
 
@@ -40,9 +40,9 @@ namespace BosnetTest.Controllers
         public TransactionHistoryResponse TransactionHistory([FromQuery] string? account, [FromQuery] string? dateFrom, [FromQuery] string? dateTo)
         {
             TransactionHistoryRequest request = new TransactionHistoryRequest();
-            request.Account = account;
-            request.DateFrom = dateFrom;
-            request.DateTo = dateTo;
+            request.account = account;
+            request.dateFrom = dateFrom;
+            request.dateTo = dateTo;
             return _transactionService.GetTransactionHistory(request);
 
         }

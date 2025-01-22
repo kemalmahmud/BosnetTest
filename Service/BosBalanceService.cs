@@ -17,7 +17,8 @@ namespace BosnetTest.Service
                 if (!reader.HasRows)
                 {
                     if (request.decAmount < 0) throw new Exception("Saldo tidak mencukupi");
-                    var stringCommand = $"INSERT INTO [BOS_Balance] VALUES ('{request.szAccountId}', '{request.szCurrencyId}', {request.decAmount})";
+                    string newBalanceString = request.decAmount.ToString("0.00000000").Replace(',', '.');
+                    var stringCommand = $"INSERT INTO [BOS_Balance] VALUES ('{request.szAccountId}', '{request.szCurrencyId}', {newBalanceString})";
                     using (var insertCommand = new OleDbCommand(stringCommand, connection, transaction))
                     {
                         insertCommand.ExecuteNonQuery();

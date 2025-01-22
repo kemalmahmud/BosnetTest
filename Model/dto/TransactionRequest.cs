@@ -3,7 +3,12 @@
     public class TransactionRequest
     {
         public string account { get; set; }
-        public decimal amount { get; set; }
-        public string currency { get; set; }
+        public List<TransactionRequestData> transactions { get; set;  }
+
+        public class TransactionRequestData
+        {
+            public decimal amount { get; set; }
+            public string currency { get; set; }
+        }
     }
 }

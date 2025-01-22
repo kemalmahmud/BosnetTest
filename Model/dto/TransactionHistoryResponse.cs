@@ -8,11 +8,11 @@
 
         public class TransactionHistoryData
         {
-            public string Account { get; set; }
-            public string TransactionType { get; set; }
-            public decimal Amount { get; set; }
-            public string Currency { get; set; }
-            public string Date { get; set; }
+            public string account { get; set; }
+            public string transactionType { get; set; }
+            public decimal amount { get; set; }
+            public string currency { get; set; }
+            public string date { get; set; }
         }
     }
 }

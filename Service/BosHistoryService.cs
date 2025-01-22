@@ -1,10 +1,6 @@
 ﻿using BosnetTest.Model;
 using System.Data.OleDb;
-using System.Data;
-using System.Transactions;
 using BosnetTest.Model.dto;
-using Microsoft.AspNetCore.Http;
-using System.Globalization;
 
 namespace BosnetTest.Service
 {
@@ -13,7 +9,8 @@ namespace BosnetTest.Service
         public string InsertToBosHistory(BOS_History request, OleDbConnection connection, OleDbTransaction transaction)
         {
             var dateTimeForSql = request.dtmTransaction.ToString("yyyy-MM-dd HH:mm:ss");
-            var stringCommand = $"INSERT INTO [BOS_History] VALUES ('{request.szTransactionId}', '{request.szAccountId}', '{request.szCurrencyId}', '{dateTimeForSql}', {request.decAmount}, '{request.szNote}')";
+            string newBalanceString = request.decAmount.ToString("0.00000000").Replace(',', '.');
+            var stringCommand = $"INSERT INTO [BOS_History] VALUES ('{request.szTransactionId}', '{request.szAccountId}', '{request.szCurrencyId}', '{dateTimeForSql}', {newBalanceString}, '{request.szNote}')";
             using (var updateCommand = new OleDbCommand(stringCommand, connection, transaction))
             {
                 updateCommand.ExecuteNonQuery();
@@ -27,18 +24,18 @@ namespace BosnetTest.Service
 
             // Membuat query dinamis
             var conditions = new List<string>();
-            if (!string.IsNullOrEmpty(request.Account))
+            if (!string.IsNullOrEmpty(request.account))
             {
-                conditions.Add($"szAccountId = '{request.Account}'");
+                conditions.Add($"szAccountId = '{request.account}'");
             }
-            if (!string.IsNullOrEmpty(request.DateFrom))
+            if (!string.IsNullOrEmpty(request.dateFrom))
             {
-                var dateFrom = request.DateFrom + " 00:00:00";
+                var dateFrom = request.dateFrom + " 00:00:00";
                 conditions.Add($"dtmTransaction >= '{dateFrom}'");
             }
-            if (!string.IsNullOrEmpty(request.DateTo))
+            if (!string.IsNullOrEmpty(request.dateTo))
             {
-                var dateTo = request.DateTo + " 23:59:59";
+                var dateTo = request.dateTo + " 23:59:59";
                 conditions.Add($"dtmTransaction <= '{dateTo}'");
             }
 
@@ -48,6 +45,7 @@ namespace BosnetTest.Service
             using (var command = new OleDbCommand(commandstring, connection, transaction))
             using (var reader = command.ExecuteReader())
             {
+                if (!reader.HasRows) throw new Exception("Data kosong");
                 while (reader.Read())
                 {
                     var row = new Dictionary<string, object>();
