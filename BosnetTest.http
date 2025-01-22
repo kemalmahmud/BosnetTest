@@ -1,6 +1,6 @@
 @BosnetTest_HostAddress = http://localhost:3000
 
-GET {{BosnetTest_HostAddress}}/user/
-Accept: application/json
+# GET {{BosnetTest_HostAddress}}/api/transaction/history
+# Accept: application/json
 
 ###

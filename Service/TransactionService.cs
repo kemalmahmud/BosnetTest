@@ -182,8 +182,8 @@ namespace BosnetTest.Service
                                     }
                                     else
                                     {
-                                        if(i==0) lastNumber = _counterService.GetTransactionIdLastNumber(connection, transaction);
-                                        if (i==0 && counterReset) lastNumber = 0; // reset ke 0 di hari berbeda
+                                        lastNumber = _counterService.GetTransactionIdLastNumber(connection, transaction);
+                                        if (counterReset) lastNumber = 0; // reset ke 0 di hari berbeda
                                         lastNumber++;
                                         bosHist.szTransactionId = _counterService.CreateTransactionId(lastNumber);
                                     }
